@@ -111,7 +111,7 @@ variable "user_supplied_source_image_id" {
 
 variable "user_supplied_userdata_path" {
   default     = null
-  description = "File path to custom VM configuration (i.e. cloud-init config) being supplied by the user"
+  description = "(Optional) File path to custom VM configuration (i.e. cloud-init config) being supplied by the user"
   type        = string
 }
 
