@@ -9,15 +9,15 @@ This module implements the [Vault with Integrated Storage Reference Architecture
 ## How to Use This Module
 
 - Ensure Azure credentials are [in place](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#authenticating-to-azure) (e.g. `az login` and `az account set --subscription="SUBSCRIPTION_ID"` on your workstation)
-  - Owner role or equivalent is required (to create the Azure role for Vault servers)
+    - Owner role or equivalent is required (to create the Azure role for Vault servers)
 
 - Ensure pre-requisite resources are created:
-  - [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#what-is-a-resource-group)
-    - See this [Resource Group module](examples/resource_group) for an example implementation
-  - [Virtual Network Subnets](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) (one for Vault Virtual Machines, and another for an Application Gateway load balancer) and associated [Network Security Groups](https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview)/[Application Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/application-security-groups)
-    - See this [Virtual Network module](examples/vnet) for an example implementation
-  - [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) with a [PFX Certificate bundle](https://docs.microsoft.com/en-us/azure/key-vault/certificates/certificate-scenarios)
-    - See this [TLS module](examples/tls) for an example implementation with supporting commands (PowerShell or openssl) to create the certificates
+    - [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#what-is-a-resource-group)
+        - See this [Resource Group module](https://github.com/hashicorp/terraform-azure-vault-ent-starter/tree/main/examples/resource_group) for an example implementation
+    - [Virtual Network Subnets](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) (one for Vault Virtual Machines, and another for an Application Gateway load balancer) and associated [Network Security Groups](https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview)/[Application Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/application-security-groups)
+        - See this [Virtual Network module](https://github.com/hashicorp/terraform-azure-vault-ent-starter/tree/main/examples/vnet) for an example implementation
+    - [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) with a [PFX Certificate bundle](https://docs.microsoft.com/en-us/azure/key-vault/certificates/certificate-scenarios)
+        - See this [TLS module](https://github.com/hashicorp/terraform-azure-vault-ent-starter/tree/main/examples/tls) for an example implementation with supporting commands (PowerShell or openssl) to create the certificates
 
 - Create a Terraform configuration that pulls in this module and specifies values for the required variables:
 
@@ -86,18 +86,18 @@ module "vault-ent" {
 - Run `terraform init` and `terraform apply`
 
 - You must [initialize](https://www.vaultproject.io/docs/commands/operator/init#operator-init) your Vault cluster after you create it. Begin by SSHing into your Vault cluster.
-  - The [example Virtual Network module](examples/vnet) deploys (optionally but enabled by default) the [Azure Bastion Service](https://docs.microsoft.com/en-us/azure/bastion/bastion-overview) to allow this via the Azure Portal.
+    - The [example Virtual Network module](https://github.com/hashicorp/terraform-azure-vault-ent-starter/tree/main/examples/vnet) deploys (optionally but enabled by default) the [Azure Bastion Service](https://docs.microsoft.com/en-us/azure/bastion/bastion-overview) to allow this via the Azure Portal.
 
 - To initialize the Vault cluster, run the following commands:
 
-```shell
+```
 # sudo -i
 # vault operator init
 ```
 
 - This should return back the following output which includes the recovery keys and initial root token (omitted here):
 
-```shell
+```
 ...
 Success! Vault is initialized
 ```
@@ -105,14 +105,14 @@ Success! Vault is initialized
 - Please securely store the recovery keys and initial root token that Vault returns to you.
 - To check the status of your Vault cluster, export your Vault token and run the [list-peers](https://www.vaultproject.io/docs/commands/operator/raft#list-peers) command:
 
-```shell
+```
 # export VAULT_TOKEN="<your Vault token>"
 # vault operator raft list-peers
 ```
 
 - Please note that Vault does not enable [dead server cleanup](https://www.vaultproject.io/docs/concepts/integrated-storage/autopilot#dead-server-cleanup) by default. You must enable this to avoid manually managing the Raft configuration every time there is a change in the Vault ASG. To enable dead server cleanup, run the following command:
 
- ```shell
+ ```
 # vault operator raft autopilot set-config \
     -cleanup-dead-servers=true \
     -dead-server-last-contact-threshold=10 \
@@ -121,11 +121,11 @@ Success! Vault is initialized
 
 - You can verify these settings after you apply them by running the following command:
 
-```shell
+```
 # vault operator raft autopilot get-config
 ```
 
 ## License
 
 This code is released under the Mozilla Public License 2.0. Please see
-[LICENSE](LICENSE) for more details.
+[LICENSE](https://github.com/hashicorp/terraform-azure-vault-ent-starter/tree/main/LICENSE) for more details.
