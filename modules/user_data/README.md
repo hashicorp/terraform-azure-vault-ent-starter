@@ -28,7 +28,7 @@ module "user_data" {
   resource_name_prefix  = "dev"
   subscription_id       = data.azurerm_client_config.current.subscription_id
   tenant_id             = data.azurerm_client_config.current.tenant_id
-  vault_version         = "1.8.0"
+  vault_version         = "1.8.1"
   vm_scale_set_name     = "dev-vault"
 
   resource_group = {
