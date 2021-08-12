@@ -48,7 +48,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vault_cluster" {
 
   os_disk {
     caching              = "ReadWrite"
-    disk_size_gb         = 50
+    disk_size_gb         = 1024
     storage_account_type = var.os_disk_type
   }
 
