@@ -26,6 +26,9 @@ timedatectl set-timezone UTC
 # removing any default installation files from /opt/vault/tls/
 rm -rf /opt/vault/tls/*
 
+# /opt/vault/tls should be readable by all users of the system
+chmod 0755 /opt/vault/tls
+
 # vault-key.pem should be readable by the vault group only
 touch /opt/vault/tls/vault-key.pem
 chown root:vault /opt/vault/tls/vault-key.pem
@@ -66,11 +69,11 @@ cluster_addr = "https://$local_ipv4:8201"
 api_addr = "https://$local_ipv4:8200"
 
 listener "tcp" {
- address     = "0.0.0.0:8200"
- tls_disable = 0
- tls_cert_file      = "/opt/vault/tls/vault-cert.pem"
- tls_key_file       = "/opt/vault/tls/vault-key.pem"
- tls_client_ca_file = "/opt/vault/tls/vault-ca.pem"
+  address            = "0.0.0.0:8200"
+  tls_disable        = false
+  tls_cert_file      = "/opt/vault/tls/vault-cert.pem"
+  tls_key_file       = "/opt/vault/tls/vault-key.pem"
+  tls_client_ca_file = "/opt/vault/tls/vault-ca.pem"
 }
 
 seal "azurekeyvault" {
@@ -95,6 +98,4 @@ echo "Setup Vault profile"
 cat <<EOF > /etc/profile.d/vault.sh
 export VAULT_ADDR="https://127.0.0.1:8200"
 export VAULT_CACERT="/opt/vault/tls/vault-ca.pem"
-export VAULT_CLIENT_CERT="/opt/vault/tls/vault-cert.pem"
-export VAULT_CLIENT_KEY="/opt/vault/tls/vault-key.pem"
 EOF
