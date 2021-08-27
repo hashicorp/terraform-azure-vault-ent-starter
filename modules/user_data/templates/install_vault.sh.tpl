@@ -26,9 +26,10 @@ timedatectl set-timezone UTC
 # removing any default installation files from /opt/vault/tls/
 rm -rf /opt/vault/tls/*
 
-touch /opt/vault/tls/{vault-cert.pem,vault-ca.pem,vault-key.pem}
-chown vault:vault /opt/vault/tls/{vault-cert.pem,vault-ca.pem,vault-key.pem}
-chmod 0640 /opt/vault/tls/{vault-cert.pem,vault-ca.pem,vault-key.pem}
+# vault-key.pem should be readable by the vault group only
+touch /opt/vault/tls/vault-key.pem
+chown root:vault /opt/vault/tls/vault-key.pem
+chmod 0640 /opt/vault/tls/vault-key.pem
 
 secret_result=$(~/.local/bin/az keyvault secret show --id "${key_vault_secret_id}" --query "value" --output tsv)
 
@@ -39,12 +40,15 @@ echo $secret_result | base64 -d | openssl pkcs12 -cacerts -nokeys -chain -passin
 echo $secret_result | base64 -d | openssl pkcs12 -nocerts -nodes -passin pass: | openssl pkcs8 -nocrypt -out /opt/vault/tls/vault-key.pem
 
 ~/.local/bin/az keyvault secret show --id "${license_secret_id}" --query "value" --output tsv | base64 -d > /opt/vault/vault.hclic
-chown vault:vault /opt/vault/vault.hclic
+# vault.hclic should be readable by the vault group only
+chown root:vault /opt/vault/vault.hclic
 chmod 0640 /opt/vault/vault.hclic
 
 cat << EOF > /etc/vault.d/vault.hcl
 disable_performance_standby = true
 ui = true
+disable_mlock = true
+
 storage "raft" {
   path    = "/opt/vault/data"
   node_id = "$instance_name"
@@ -79,8 +83,10 @@ license_path = "/opt/vault/vault.hclic"
 
 EOF
 
-chown -R vault:vault /etc/vault.d/*
-chmod -R 640 /etc/vault.d/*
+# vault.hcl should be readable by the vault group only
+chown root:root /etc/vault.d
+chown root:vault /etc/vault.d/vault.hcl
+chmod 640 /etc/vault.d/vault.hcl
 
 systemctl enable vault
 systemctl start vault

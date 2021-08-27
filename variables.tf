@@ -150,7 +150,7 @@ variable "vault_license_filepath" {
 }
 
 variable "vault_version" {
-  default     = "1.8.0"
+  default     = "1.8.1"
   description = "Vault version"
   type        = string
 }
