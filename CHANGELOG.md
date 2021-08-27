@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.1.1 (August 27, 2021)
+
 * Update TLS directory permissions
 * Remove client cert and key from profile script
 * Update indentation in configuration file
