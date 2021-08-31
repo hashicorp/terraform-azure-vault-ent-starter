@@ -1,5 +1,16 @@
 ## Unreleased
 
+**NOTE:** The role definition change incurs no direct downtime, but requires Terraform to replace two resources. This will fail initially due to the role definition's fixed name (Terraform will generate an error when attempting to create a replacement with the same name). To work around this, delete the role definition and its assignment first:
+
+```bash
+az role assignment delete --ids /subscriptions/SUBSCRIPTIONGUIDHERE/resourceGroups/myresourcegroupname/providers/Microsoft.Authorization/roleAssignments/ROLEASSIGNMENTGUID
+
+az role definition delete --name my-resource-name-prefix-vault-server --scope /subscriptions/SUBSCRIPTIONGUIDHERE
+```
+The role assignment ID, subscription GUID, and role definition name will be displayed by Terraform via `terraform plan`
+
+* Reduced deployment scope for the VM role definition to its Resource Group
+
 ## 0.1.1 (August 27, 2021)
 
 * Update TLS directory permissions
