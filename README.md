@@ -90,9 +90,8 @@ module "vault-ent" {
 
 - To initialize the Vault cluster, run the following commands:
 
-```
-# sudo -i
-# vault operator init
+```bash
+vault operator init
 ```
 
 - This should return back the following output which includes the recovery keys and initial root token (omitted here):
@@ -105,15 +104,15 @@ Success! Vault is initialized
 - Please securely store the recovery keys and initial root token that Vault returns to you.
 - To check the status of your Vault cluster, export your Vault token and run the [list-peers](https://www.vaultproject.io/docs/commands/operator/raft#list-peers) command:
 
-```
-# export VAULT_TOKEN="<your Vault token>"
-# vault operator raft list-peers
+```bash
+export VAULT_TOKEN="<your Vault token>"
+vault operator raft list-peers
 ```
 
 - Please note that Vault does not enable [dead server cleanup](https://www.vaultproject.io/docs/concepts/integrated-storage/autopilot#dead-server-cleanup) by default. You must enable this to avoid manually managing the Raft configuration every time there is a change in the Vault ASG. To enable dead server cleanup, run the following command:
 
- ```
-# vault operator raft autopilot set-config \
+ ```bash
+vault operator raft autopilot set-config \
     -cleanup-dead-servers=true \
     -dead-server-last-contact-threshold=10 \
     -min-quorum=3
@@ -121,8 +120,8 @@ Success! Vault is initialized
 
 - You can verify these settings after you apply them by running the following command:
 
-```
-# vault operator raft autopilot get-config
+```bash
+vault operator raft autopilot get-config
 ```
 
 ## License
