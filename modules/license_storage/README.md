@@ -2,7 +2,7 @@
 
 ## Required variables
 
-* `key_vault_id` - ID of Key Vault in which the Vault unseal key will be created
+* `key_vault_id` - ID of Key Vault in which the Vault license will be stored
 * `resource_name_prefix` - Prefix placed before resource names
 * `vault_license_filepath` - Path to location of Vault license file
 

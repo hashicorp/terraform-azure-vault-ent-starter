@@ -3,7 +3,7 @@
 ## Required variables
 
 * `key_vault_key_name` - Name of Key Vault Key used for unsealing Vault
-* `key_vault_name` - Name of Key Vault in which the Vault unseal key is located
+* `key_vault_name` - Name of Key Vault in which the Vault key & secrets are stored
 * `key_vault_secret_id` - ID of Key Vault Secret in which Vault TLS PFX bundle is stored
 * `leader_tls_servername` - DNS name to use when checking certificate names of other Vault servers
 * `resource_group` - Resource group in which resources will be deployed

@@ -4,7 +4,7 @@ variable "common_tags" {
 }
 
 variable "key_vault_id" {
-  description = "Azure Key Vault in which the Vault seal secret will be stored"
+  description = "Azure Key Vault in which the Vault license will be stored"
   type        = string
 }
 

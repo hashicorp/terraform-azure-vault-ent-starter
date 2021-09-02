@@ -1,5 +1,5 @@
 variable "key_vault_name" {
-  description = "Azure Key Vault in which the Vault seal secret is stored"
+  description = "Azure Key Vault in which the Vault key & secrets are stored"
   type        = string
 }
 
