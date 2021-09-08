@@ -23,7 +23,7 @@ variable "instance_type" {
 }
 
 variable "key_vault_id" {
-  description = "Azure Key Vault containing TLS certificates (will also be used to store Vault seal secret)"
+  description = "Azure Key Vault containing TLS certificates (will also be used to store Vault seal secret & license)"
   type        = string
 }
 

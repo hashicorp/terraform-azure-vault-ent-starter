@@ -2,7 +2,7 @@
 
 ## Required variables
 
-* `key_vault_id` - ID of Key Vault in which the Vault unseal key will be created
+* `key_vault_id` - ID of Key Vault containing the Vault key & secrets
 * `resource_group` - Resource group in which resources will be deployed
 * `resource_name_prefix` - Prefix placed before resource names
 * `tenant_id` - Tenant ID for Azure subscription in which resources are being deployed
