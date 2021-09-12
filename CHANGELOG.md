@@ -1,5 +1,8 @@
 ## Unreleased
 
+* Add resource tags to 2 additional example resources (`azurerm_bastion_host` & `azurerm_key_vault_certificate`)
+* Add explicit NAT Gateway association dependency to example vnet subnet id output
+
 ## 0.1.1 (August 27, 2021)
 
 * Update TLS directory permissions
