@@ -17,13 +17,13 @@ resource "azurerm_key_vault_access_policy" "vault_msi" {
   tenant_id    = var.tenant_id
 
   key_permissions = [
-    "get",
-    "unwrapKey",
-    "wrapKey",
+    "Get",
+    "UnwrapKey",
+    "WrapKey",
   ]
 
   secret_permissions = [
-    "get",
+    "Get",
   ]
 }
 
@@ -69,6 +69,6 @@ resource "azurerm_key_vault_access_policy" "load_balancer_msi" {
   tenant_id    = var.tenant_id
 
   secret_permissions = [
-    "get",
+    "Get",
   ]
 }
