@@ -43,7 +43,6 @@ module "user_data" {
   leader_tls_servername       = var.leader_tls_servername
   license_secret_id           = module.license_storage.license_secret_id
   resource_group              = var.resource_group
-  resource_name_prefix        = var.resource_name_prefix
   subscription_id             = data.azurerm_client_config.current.subscription_id
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   user_supplied_userdata_path = var.user_supplied_userdata_path
