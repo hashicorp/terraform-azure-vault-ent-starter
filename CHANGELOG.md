@@ -1,4 +1,5 @@
 ## Unreleased
+* Switch VM configuration to use user_data instead of custom_data
 
 ## 0.1.1 (August 27, 2021)
 
