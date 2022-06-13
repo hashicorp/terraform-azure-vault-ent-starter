@@ -1,6 +1,9 @@
 ## Unreleased
 * Switch VM configuration to use user_data instead of custom_data
 
+## 0.1.2 (June 13, 2022)
+* Add UserAssigned to type for indentity in config file to accomodate provider version changes
+
 ## 0.1.1 (August 27, 2021)
 
 * Update TLS directory permissions
