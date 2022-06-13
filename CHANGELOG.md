@@ -1,5 +1,6 @@
 ## Unreleased
 * Switch VM configuration to use user_data instead of custom_data
+* Add UserAssigned to type for indentity in config file to accomodate provider version changes
 
 ## 0.1.1 (August 27, 2021)
 

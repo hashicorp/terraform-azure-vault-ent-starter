@@ -46,6 +46,7 @@ resource "azurerm_application_gateway" "vault" {
 
   identity {
     identity_ids = var.identity_ids
+    type = "UserAssigned"
   }
 
   frontend_port {
