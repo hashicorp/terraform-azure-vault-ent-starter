@@ -73,9 +73,10 @@ resource "azurerm_key_vault_access_policy" "vault" {
 resource "azurerm_key_vault_certificate" "vault" {
   key_vault_id = azurerm_key_vault_access_policy.vault.key_vault_id
   name         = "${var.resource_name_prefix}-vault-cert"
+  tags         = var.common_tags
 
   certificate {
-    contents = filebase64("certificate-to-import.pfx")
+    contents = tls_locally_signed_cert.server.cert_pfx
     password = ""
   }
 
@@ -100,5 +101,6 @@ resource "azurerm_key_vault_certificate" "vault" {
 resource "azurerm_key_vault_secret" "vault" {
   key_vault_id = azurerm_key_vault_access_policy.vault.key_vault_id
   name         = "${var.resource_name_prefix}-vault-vm-tls"
-  value        = filebase64("certificate-to-import.pfx")
+  tags         = var.common_tags
+  value        = tls_locally_signed_cert.server.cert_pfx
 }

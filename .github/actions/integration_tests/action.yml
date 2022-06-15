@@ -1,0 +1,32 @@
+name: Run integration tests
+description: Deploy infrastructure, test it, and destroy it
+inputs:
+  env_suffix:
+    description: 'Environment suffix'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo "Installing dependencies"
+      shell: bash
+    - name: Install dependencies
+      run: |
+        TFENV_DL_TMP=$(mktemp -d)
+        curl -Lo $TFENV_DL_TMP/tfenv.zip https://github.com/tfutils/tfenv/archive/2989f1a5560e313f70f7711be592ddb68418862b.zip
+        unzip $TFENV_DL_TMP/tfenv.zip -d $TFENV_DL_TMP
+        mv $TFENV_DL_TMP/tfenv-2989f1a5560e313f70f7711be592ddb68418862b ~/.tfenv
+        echo "$HOME/.tfenv/bin" >> $GITHUB_PATH
+      shell: bash
+    - run: echo "Disabling Key Vault purge"  # RG-scoped IAM principal doesn't have the subscription-scope access to purge soft-deleted Key Vaults
+      shell: bash
+    - name: Disable Key Vault purge
+      run: sed -i 's/^    resource_group {/    key_vault { purge_soft_delete_on_destroy = false }\n    resource_group {/' examples/prereqs_quickstart/main.tf
+      shell: bash
+    - run: echo "Deploying and running tests"
+      shell: bash
+    - name: Deploy and run tests
+      run: tfenv install && DEPLOY_ENV=inttest${{ inputs.env_suffix }} go test -v -timeout 120m
+      working-directory: ./test
+      shell: bash
+    - run: echo "Integration tests succeeded"
+      shell: bash
