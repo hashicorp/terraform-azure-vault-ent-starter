@@ -72,7 +72,8 @@ module "vault-ent" {
   # Prefix for resource names
   resource_name_prefix = "dev"
 
-  # SSH public key (for authentication to Vault servers)
+  # SSH public key (authentication to Vault servers)
+  # Follow steps on private/public key creation (https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys)
   ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADA..."
 
   # Application Security Group IDs for Vault VMs
