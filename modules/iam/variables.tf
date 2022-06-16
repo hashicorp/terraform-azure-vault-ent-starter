@@ -13,7 +13,6 @@ variable "resource_group" {
   description = "Azure resource group in which resources will be deployed"
 
   type = object({
-    id       = string
     location = string
     name     = string
   })

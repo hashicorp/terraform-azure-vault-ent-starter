@@ -12,3 +12,11 @@ output "key_vault_vm_tls_secret_id" {
   description = "Key Vault Secret id where VM TLS cert info is stored"
   value       = azurerm_key_vault_secret.vault.id
 }
+
+output "root_ca_pem" {
+  value = tls_self_signed_cert.ca.cert_pem
+}
+
+output "shared_san" {
+  value = tls_cert_request.server.dns_names[0]
+}

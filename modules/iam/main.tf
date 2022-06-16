@@ -1,5 +1,9 @@
 data "azurerm_subscription" "current" {}
 
+locals {
+  resource_group_id = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/${var.resource_group.name}"
+}
+
 resource "azurerm_user_assigned_identity" "vault" {
   count = var.user_supplied_vm_identity_id != null ? 0 : 1
 
@@ -31,10 +35,10 @@ resource "azurerm_role_definition" "vault" {
   count = var.user_supplied_vm_identity_id != null ? 0 : 1
 
   name  = "${var.resource_name_prefix}-vault-server"
-  scope = data.azurerm_subscription.current.id
+  scope = local.resource_group_id
 
   assignable_scopes = [
-    var.resource_group.id,
+    local.resource_group_id,
   ]
 
   permissions {
@@ -49,7 +53,7 @@ resource "azurerm_role_assignment" "vault" {
 
   principal_id       = azurerm_user_assigned_identity.vault[0].principal_id
   role_definition_id = azurerm_role_definition.vault[0].role_definition_resource_id
-  scope              = var.resource_group.id
+  scope              = local.resource_group_id
 }
 
 resource "azurerm_user_assigned_identity" "load_balancer" {
