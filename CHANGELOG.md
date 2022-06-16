@@ -15,7 +15,7 @@ IMPROVEMENTS:
 
 FIXES:
 * Add UserAssigned to type for identity in config file to accomodate provider version changes
-* Upate AZ for load balancer and routing priority
+* szurerm provider v3 update - AZ for load balancer and routing priority
 
 ## 0.1.1 (August 27, 2021)
 
