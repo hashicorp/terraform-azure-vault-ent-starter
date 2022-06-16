@@ -20,7 +20,7 @@ This module implements the [Vault with Integrated Storage Reference Architecture
       - The internal load balancer Virtual Network subnet should have external internet traffic blocked via Network Security Group rules
     - [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) with a [PFX Certificate bundle](https://docs.microsoft.com/en-us/azure/key-vault/certificates/certificate-scenarios) stored as both a Key Vault Certificate (for the Application Gateway load balancer) and a secret (for the Vault nodes).
 
-- Create a Terraform configuration that pulls in this module and specifies values for the required variables:
+- Create a Terraform configuration (create separate directory and include the Certificate file) that pulls in this module and specifies values for the required variables:
 
 ```hcl
 provider "azurerm" {
@@ -72,7 +72,7 @@ module "vault-ent" {
   # Prefix for resource names
   resource_name_prefix = "dev"
 
-  # SSH public key (for authentication to Vault servers)
+  # SSH public key (needs to be created for authentication to Vault servers)
   ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADA..."
 
   # Application Security Group IDs for Vault VMs
