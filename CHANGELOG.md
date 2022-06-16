@@ -1,6 +1,20 @@
 ## Unreleased
+
+BREAKING CHANGES:
+* Reduced deployment scope for the VM role definition to its Resource Group
+  * **NOTE:** This role definition change incurs no direct downtime, but requires Terraform to replace two resources. This will fail initially due to the role definition's fixed name (Terraform will generate an error when attempting to create a replacement with the same name). To work around this, delete the role definition and its assignment first:
+
+```bash
+az role assignment delete --ids /subscriptions/SUBSCRIPTIONGUIDHERE/resourceGroups/myresourcegroupname/providers/Microsoft.Authorization/roleAssignments/ROLEASSIGNMENTGUID
+az role definition delete --name my-resource-name-prefix-vault-server --scope /subscriptions/SUBSCRIPTIONGUIDHERE
+```
+The role assignment ID, subscription GUID, and role definition name will be displayed by Terraform via `terraform plan`
+
+IMPROVEMENTS:
 * Switch VM configuration to use user_data instead of custom_data
-* Add UserAssigned to type for indentity in config file to accomodate provider version changes
+
+FIXES:
+* Add UserAssigned to type for identity in config file to accomodate provider version changes
 
 ## 0.1.1 (August 27, 2021)
 
