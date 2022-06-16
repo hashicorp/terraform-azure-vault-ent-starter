@@ -9,7 +9,6 @@ variable "resource_group" {
   description = "(Optional) Azure resource group in which resources will be deployed; omit to create one"
 
   type = object({
-    id       = string
     location = string
     name     = string
   })
