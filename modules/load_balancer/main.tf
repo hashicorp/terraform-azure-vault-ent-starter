@@ -16,6 +16,7 @@ resource "azurerm_public_ip" "vault_lb" {
   resource_group_name = var.resource_group.name
   sku                 = "Standard"
   tags                = var.common_tags
+  zones               = var.zones
 }
 
 resource "azurerm_application_gateway" "vault" {
@@ -107,6 +108,7 @@ resource "azurerm_application_gateway" "vault" {
     http_listener_name         = local.http_listener_name
     name                       = "${var.resource_name_prefix}-vault"
     rule_type                  = "Basic"
+    priority                   = 1000
   }
 
   ssl_certificate {
