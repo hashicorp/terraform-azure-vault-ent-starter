@@ -10,9 +10,14 @@ terraform {
   }
 
   required_providers {
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.7"
+    }
+
     testingtoolsazure = {
       source  = "app.terraform.io/hc-tfc-dev/testingtoolsazure"
-      version = "~> 0.1"
+      version = "~> 0.2"
     }
   }
 }

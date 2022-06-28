@@ -1,3 +1,7 @@
+provider "testingtoolsazure" {
+  features {}
+}
+
 data "azurerm_client_config" "current" {}
 
 locals {
@@ -131,6 +135,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "test" {
     azurerm_role_assignment.test,
   ]
 }
+
 resource "testingtoolsazure_vmss_run_command" "wait_for_test_system_bootup" {
   instance_id         = 0
   resource_group_name = module.quickstart.resource_group.name
@@ -138,6 +143,15 @@ resource "testingtoolsazure_vmss_run_command" "wait_for_test_system_bootup" {
 
   scripts = [
     "date && while [ ! -f /var/lib/cloud/instance/boot-finished ]; do sleep 5; done && date",
+  ]
+}
+
+resource "time_sleep" "wait_30_seconds_after_vault_bootstrap" {
+  create_duration = "30s"
+
+  depends_on = [
+    testingtoolsazure_vmss_run_command.bootstrap_vault,
+    testingtoolsazure_vmss_run_command.wait_for_test_system_bootup,
   ]
 }
 
@@ -151,8 +165,7 @@ resource "testingtoolsazure_vmss_run_command" "vault_operator_raft_list_peers" {
   ]
 
   depends_on = [
-    testingtoolsazure_vmss_run_command.bootstrap_vault,
-    testingtoolsazure_vmss_run_command.wait_for_test_system_bootup,
+    time_sleep.wait_30_seconds_after_vault_bootstrap,
   ]
 }
 
