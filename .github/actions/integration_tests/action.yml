@@ -1,3 +1,8 @@
+# Copyright © 2014-2022 HashiCorp, Inc.
+#
+# This Source Code is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this project, you can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
 name: Run integration tests
 description: Deploy infrastructure, test it, and destroy it
 inputs:
@@ -20,7 +25,7 @@ runs:
     - run: echo "Disabling Key Vault purge"  # RG-scoped IAM principal doesn't have the subscription-scope access to purge soft-deleted Key Vaults
       shell: bash
     - name: Disable Key Vault purge
-      run: sed -i 's/^    resource_group {/    key_vault { purge_soft_delete_on_destroy = false }\n    resource_group {/' examples/prereqs_quickstart/main.tf
+      run: sed -i 's/^    resource_group {/    key_vault { purge_soft_delete_on_destroy = false }\n    resource_group {/' examples/prereqs_quickstart/main.tf && sed -i 's/^  features {}/  features {\n    key_vault { purge_soft_delete_on_destroy = false }\n  }/' test/main.tf
       shell: bash
     - run: echo "Deploying and running tests"
       shell: bash

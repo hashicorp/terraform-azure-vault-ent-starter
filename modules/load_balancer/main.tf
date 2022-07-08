@@ -1,3 +1,10 @@
+/**
+ * Copyright © 2014-2022 HashiCorp, Inc.
+ *
+ * This Source Code is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this project, you can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ */
+
 locals {
   backend_address_pool_name      = "${var.resource_name_prefix}-vault"
   backend_http_setting_name      = "${var.resource_name_prefix}-vault"
