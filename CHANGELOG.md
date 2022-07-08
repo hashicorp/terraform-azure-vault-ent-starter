@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.0.0 (July 8, 2022)
+
 BREAKING CHANGES:
 * Azurerm provider V3 is now required
 * Reduced deployment scope for the VM role definition to its Resource Group
