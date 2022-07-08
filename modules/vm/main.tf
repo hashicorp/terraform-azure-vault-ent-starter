@@ -1,3 +1,10 @@
+/**
+ * Copyright © 2014-2022 HashiCorp, Inc.
+ *
+ * This Source Code is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this project, you can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ */
+
 resource "azurerm_linux_virtual_machine_scale_set" "vault_cluster" {
   admin_username      = var.ssh_username
   instances           = var.instance_count
